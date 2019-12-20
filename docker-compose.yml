@@ -6,6 +6,8 @@ services:
       context: ./
       dockerfile: api.dockerfile
     image: spotech.io/app
+    expose: 
+      - "80"
     ports:
       - "3030:80"
     container_name: spotech_app
@@ -14,23 +16,7 @@ services:
     environment:
       SERVICE_NAME: spotech_app
       SERVICE_TAGS: production
-    working_dir: /var/www/api
-    networks:
-      - spotech-network
-  spotech_front:
-    build:
-      context: ./
-      dockerfile: front.dockerfile
-    image: spotech.io/front
-    ports:
-      - "3030:80"
-    container_name: spotech_front
-    restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: spotech_front
-      SERVICE_TAGS: production
-    working_dir: /var/www/front
+    working_dir: /var/www
     networks:
       - spotech-network
 
