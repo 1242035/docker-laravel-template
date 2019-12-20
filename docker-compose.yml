@@ -8,8 +8,10 @@ services:
     image: spotech.io/app
     expose: 
       - "80"
+      - "6001"
     ports:
       - "3030:80"
+      - "3031:6001"
     container_name: spotech_app
     restart: unless-stopped
     tty: true
