@@ -14,4 +14,6 @@ project
 
  ### 3. buil with docker and kebernes
  # 1. docker build -t spotech-api -f api.dockerfile
- # 2. kubectl create -f deploy.yaml || kubectl run -f deploy.yaml || kubectl apply -f deploy.yaml
+ # 2. kubectl create -f deploy.yaml 
+ # OR kubectl run -f deploy.yaml 
+ # OR kubectl apply -f deploy.yaml
