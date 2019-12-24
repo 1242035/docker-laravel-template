@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spotech-api
+  name: spotech-frontend
   labels:
-    app: spotech-api
+    app: spotech-frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spotech-api
+      app: spotech-frontend
   template:
     metadata:
       labels:
-        app: spotech-api
+        app: spotech-frontend
     spec:
       containers:
-      - name: spotech-api
-        image: chidungdekiemtra/spotech-api
+      - name: spotech-frontend
+        image: chidungdekiemtra/spotech-frontend
         imagePullPolicy: Never
         ports:
-        - containerPort: 80
+        - containerPort: 3000
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: spotech-api
+  name: spotech-frontend
 spec:
   selector:
-    app: spotech-api
+    app: spotech-frontend
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 3000

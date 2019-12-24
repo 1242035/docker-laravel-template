@@ -1,41 +1,15 @@
-FROM php:7.3-fpm
+FROM php:7.2-fpm
 
 COPY ./spotech-backend/ /var/www
 
 WORKDIR /var/www
 
-RUN apt-get update && apt-get purge --auto-remove -y && apt-get upgrade -y && apt-get install -y cron wget zip unzip nginx supervisor libonig-dev libxml2-dev libmcrypt-dev openssl libssl-dev libcurl4-openssl-dev
+RUN apt-get update -y && apt-get install -y cron wget nginx supervisor zip unzip curl build-essential libssl-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev
 
-RUN docker-php-ext-install pdo
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install pdo_mysql 
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-install fileinfo
-RUN docker-php-ext-install gettext
-RUN docker-php-ext-install iconv
-RUN docker-php-ext-install bcmath
-RUN docker-php-ext-install ctype
-RUN docker-php-ext-install json
-RUN docker-php-ext-install tokenizer
-RUN docker-php-ext-install xml
-# idk bz2 enchant 
-#RUN apt install -y libbz2-dev
-#RUN docker-php-ext-install bz2
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd
 
-#RUN docker-php-ext-install timezonedb
-
-# install apcu
-RUN pecl install apcu \
-    && docker-php-ext-enable apcu
-
-#install Imagemagick & PHP Imagick ext
-RUN apt-get update && apt-get install -y \
-        libmagickwand-dev --no-install-recommends
-
-RUN pecl install imagick-3.4.4 && docker-php-ext-enable imagick
-
-# install mongodb ext
-RUN pecl install mongodb-1.6.1 && docker-php-ext-enable mongodb
+RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring zip
 
 RUN mkdir /run/php
 
@@ -60,6 +34,6 @@ RUN php artisan passport:install
 RUN php artisan config:cache
 RUN php artisan optimize
 
-EXPOSE 80 6001
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

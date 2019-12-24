@@ -2,3 +2,6 @@ spotech-backend/vendor
 spotech-backend/node_modules
 spotech-backend/composer.lock
 spotech-backend/package-lock.json
+spotech-frontend/.nuxt
+spotech-frontend/node_modules
+spotech-frontend/.vs
